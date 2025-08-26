@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "../../api/axiosInstance";
-import { useParams } from "react-router-dom";
+import { useParams ,useNavigate } from "react-router-dom";
 
 const styles = {
   container: {
@@ -64,6 +64,18 @@ const styles = {
     padding: "0.5rem",
     borderBottom: "1px solid #e9ecef",
   },
+  backButton: {
+    marginTop: '1.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '0.5rem',
+    cursor: 'pointer',
+    color: '#007bff',
+    fontSize: '1rem',
+    fontWeight: '500',
+    textDecoration: 'underline'
+  }
 };
 
 const AddChapter = () => {
@@ -72,6 +84,7 @@ const AddChapter = () => {
   const [chapters, setChapters] = useState([]);
   const [chapterName, setChapterName] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProjectAndChapters = async () => {
@@ -108,6 +121,9 @@ const AddChapter = () => {
     } catch (err) {
       setMessage("Error adding chapter");
     }
+  };
+  const handleBack = () => {
+    navigate(-1); // go back to previous page
   };
 
   return (
@@ -152,6 +168,12 @@ const AddChapter = () => {
           {message}
         </p>
       )}
+
+      {/* Back option with arrow */}
+      <div style={styles.backButton} onClick={handleBack}>
+        ← Back
+      </div>
+        
     </div>
   );
 };
