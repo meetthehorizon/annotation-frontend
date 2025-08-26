@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "../../api/axiosInstance";
 
 const styles = {
@@ -58,12 +59,25 @@ const styles = {
     backgroundColor: "#f8d7da",
     border: "1px solid #f5c6cb",
   },
+  backButton: {
+    marginTop: '1.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '0.5rem',
+    cursor: 'pointer',
+    color: '#007bff',
+    fontSize: '1rem',
+    fontWeight: '500',
+    textDecoration: 'underline'
+  }
 };
 
 const AddProject = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,6 +92,10 @@ const AddProject = () => {
     } catch (error) {
       setMessage(error.response?.data?.message || "Error creating project");
     }
+  };
+  
+  const handleBack = () => {
+    navigate(-1); // takes user to previous page
   };
 
   return (
@@ -112,6 +130,11 @@ const AddProject = () => {
           {message}
         </p>
       )}
+
+      {/* Back option with arrow */}
+      <div style={styles.backButton} onClick={handleBack}>
+        ← Back
+      </div>
     </div>
   );
 };
